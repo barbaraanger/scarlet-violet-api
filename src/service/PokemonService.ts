@@ -20,7 +20,6 @@ export class PokemonService {
 
     createPaldeaPokedex = async () => {
         const results: any = []
-        
         try {
             paldeaPokedex.map(async (entry) => {
                 if (await entryAlreadyExists(entry)) {
@@ -45,5 +44,8 @@ export class PokemonService {
             results.push({ success: false, error: error.message })
         }
         return results
+    }
+    fetchPokemonTypes(entryNumber: Number) {
+
     }
 }
