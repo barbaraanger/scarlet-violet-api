@@ -5,10 +5,6 @@ import { paldeaPokedex } from '../pokedex';
 
 export class PokemonService {
 
-    findById = (req: any, res: any) => {
-        return Pokemon.findById(req.id);
-    }
-
     fetchPokemon = async () => {
         paldeaPokedex.map((entry) => {
             const pokemonSchema = new Pokemon(entry);
