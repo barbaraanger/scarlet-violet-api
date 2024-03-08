@@ -6,7 +6,7 @@ const pokemonService = new PokemonService();
 
 export const fetchPokemon = (req: any, res: any) => {
     try {
-        const response = pokemonService.fetchPokemon();
+        const response = pokemonService.fetchAndSaveData()
         res.status(200).json(response)
     } catch (error) {
         res.status(500).json(error);

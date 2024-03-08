@@ -16,7 +16,7 @@ export class PokemonService {
         const results: any = []
 
         try {
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
+            const response = await axios.get(POKE_API_PALDEA);
             const pokemons = response.data.results.map((pokemon: IPokemon) => pokemon);
             results.push({ success: true, saved: pokemons })
             await this.pokemonRepository.createMany(pokemons);
