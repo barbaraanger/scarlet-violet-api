@@ -1,41 +1,25 @@
-import { entryAlreadyExists } from "../helpers";
-import { Pokemon } from "../models/PokemonModel";
-import { getPokemonData } from "../pokeAPI";
-import { paldeaPokedex } from '../pokedex';
+import axios from "axios";
+import { PokemonRepository } from "../repository"
+import { IPokemon } from "../types";
+
+const POKE_API = 'https://pokeapi.co/api/v2';
+export const POKE_API_PALDEA = "https://pokeapi.co/api/v2/pokedex/31/";
 
 export class PokemonService {
+    pokemonRepository: PokemonRepository;
 
-    fetchPokemon = async () => {
-        paldeaPokedex.map((entry) => {
-            const pokemonSchema = new Pokemon(entry);
-            pokemonSchema.save()
-        })
-
-        return Pokemon.find({});
+    constructor() {
+        this.pokemonRepository = new PokemonRepository();
     }
 
-    createPaldeaPokedex = async () => {
+    fetchAndSaveData = async () => {
         const results: any = []
+
         try {
-            paldeaPokedex.map(async (entry) => {
-                if (await entryAlreadyExists(entry)) {
-                    results.push({ success: false });
-                } else {
-                    const { entry_number } = entry;
-                    const newEntry = new Pokemon(entry);
-                    const pokemonTypes = getPokemonData({ id: entry_number });
-                    console.log(pokemonTypes)
-                    try {
-                        const savedEntry = await newEntry.save();
-                        console.log('New entry saved: ', savedEntry);
-                        results.push({ success: true, entry: savedEntry });
-                        return savedEntry;
-                    } catch (error) {
-                        console.error('Error saving new entry:', error);
-                        return error;
-                    }
-                }
-            })
+            const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
+            const pokemons = response.data.results.map((pokemon: IPokemon) => pokemon);
+            results.push({ success: true, saved: pokemons })
+            await this.pokemonRepository.createMany(pokemons);
         } catch (error: any) {
             results.push({ success: false, error: error.message })
         }
