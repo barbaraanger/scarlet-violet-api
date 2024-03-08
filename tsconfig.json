@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
-      "target": "ES6",
-      "module": "CommonJS",
+      "target": "es2022",
+      "module": "NodeNext",
       "outDir": "./dist",
+      "moduleResolution": "nodenext",
       "rootDir": "./src",
       "strict": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
-      "noImplicitAny": true
+      "noImplicitAny": true,
+      "allowSyntheticDefaultImports": true
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
