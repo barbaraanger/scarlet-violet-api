@@ -1,3 +1,3 @@
 export * from './Error'
 export * from './Pokemon'
-export * from './messageResponse'
+export * from './MessageResponse'
