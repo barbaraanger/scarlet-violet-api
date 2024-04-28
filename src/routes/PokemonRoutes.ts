@@ -1,4 +1,4 @@
-import express = require('express');
+import express from 'express';
 import { createPaldeaPokedex, fetchPokemon } from '../controllers';
 
 const pokemonRouter = express.Router();
